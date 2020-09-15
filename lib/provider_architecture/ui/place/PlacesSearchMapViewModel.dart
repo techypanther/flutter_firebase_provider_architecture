@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_provider_architecture/model/error.dart';
 import 'package:flutter_provider_architecture/model/place_response.dart';
 import 'package:flutter_provider_architecture/model/result.dart';
-import 'package:flutter_provider_architecture/model/user.dart';
+import 'package:flutter_provider_architecture/model/user_data.dart';
 import 'package:flutter_provider_architecture/model/user_pref.dart';
 import 'package:flutter_provider_architecture/provider_architecture/repository/api/ErrorResponse.dart';
 import 'package:flutter_provider_architecture/provider_architecture/ui/base/base_model.dart';
@@ -39,7 +39,7 @@ class PlacesSearchMapViewModel extends BaseModel implements ErrorResponse {
   GoogleMapController controller;
   CameraPosition myLocation;
 
-  User currentUser;
+  UserData currentUser;
   num meter = 2000;
 
   init(String keyword, BuildContext context) {

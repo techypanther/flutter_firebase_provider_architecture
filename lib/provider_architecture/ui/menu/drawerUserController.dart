@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_provider_architecture/model/user.dart';
+import 'package:flutter_provider_architecture/model/user_data.dart';
 import 'package:flutter_provider_architecture/provider_architecture/ui/menu/homeDrawer.dart';
 import 'package:flutter_provider_architecture/utils/theme.dart';
 
@@ -12,7 +12,7 @@ class DrawerUserController extends StatefulWidget {
   final AnimatedIconData animatedIconData;
   final Widget menuView;
   final DrawerIndex screenIndex;
-  final User user;
+  final UserData user;
   final Function logout;
 
   const DrawerUserController({

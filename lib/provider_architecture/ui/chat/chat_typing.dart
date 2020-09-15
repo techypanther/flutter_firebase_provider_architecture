@@ -41,9 +41,8 @@ class _TypingStreamState extends State<TypingStream>
       stream: fireStore.collection('chat').document(widget.chatId).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData && (snapshot.data == null)) {
-          fireStore.collection('chat').document(widget.chatId).setData(
-              {'userTyping': false, 'adminTyping': false},
-              merge: true);
+          fireStore.collection('chat').doc(widget.chatId).set(
+              {'userTyping': false, 'adminTyping': false});
           return Container();
         }
         var document = snapshot.data;

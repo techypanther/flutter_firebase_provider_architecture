@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_provider_architecture/model/user.dart';
+import 'package:flutter_provider_architecture/model/user_data.dart';
 import 'package:flutter_provider_architecture/utils/theme.dart';
 
 class HomeDrawer extends StatefulWidget {
   final AnimationController iconAnimationController;
   final DrawerIndex screenIndex;
   final Function(DrawerIndex) callBackIndex;
-  final User user;
+  final UserData user;
   final Function logout;
 
   HomeDrawer({

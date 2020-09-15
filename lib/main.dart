@@ -5,11 +5,9 @@ import 'package:flutter_provider_architecture/provider_architecture/ui/splash_sc
 import 'package:flutter_provider_architecture/utils/theme.dart';
 
 void main() {
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
+
     setupLocator();
     runApp(MyApp());
-  });
 }
 
 class MyApp extends StatefulWidget {

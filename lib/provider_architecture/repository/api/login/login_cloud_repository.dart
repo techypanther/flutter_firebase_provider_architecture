@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:flutter_provider_architecture/model/user.dart';
+import 'package:flutter_provider_architecture/model/user_data.dart';
 import 'package:flutter_provider_architecture/model/user_pref.dart';
 import 'package:flutter_provider_architecture/provider_architecture/repository/api/ErrorResponse.dart';
 import 'package:flutter_provider_architecture/utils/CustomProgressDialog.dart';
@@ -28,11 +28,11 @@ class LoginCloudRepository {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    final AuthResult authResult =
+    final UserCredential authResult =
         await FirebaseAuth.instance.signInWithCredential(credential);
-    FirebaseUser user = authResult.user;
-    String token = (await user.getIdToken()).token;
-    User loggedUser = new User(
+    User user = authResult.user;
+    String token = await user.getIdToken();
+    UserData loggedUser = new UserData(
       email: user.email,
       id: user.uid,
       token: token,
@@ -51,25 +51,27 @@ class LoginCloudRepository {
     final facebookLogin = FacebookLogin();
     facebookLogin.loginBehavior = FacebookLoginBehavior.nativeWithFallback;
     await facebookLogin.logOut();
-    final result = await facebookLogin.logIn(['email', 'public_profile']);
+    final FacebookLoginResult result = await facebookLogin.logIn(['email', 'public_profile']);
     print(result.status);
     print(result.toString());
     print(result.accessToken.token);
     print(result.errorMessage);
 
     FacebookAccessToken myToken = result.accessToken;
-
-    AuthCredential credential =
-        FacebookAuthProvider.getCredential(accessToken: myToken.token);
+    final FacebookAuthCredential facebookAuthCredential =
+    FacebookAuthProvider.credential(result.accessToken.token);
+    UserCredential credential =
+        await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
     try {
-      final AuthResult authResult =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+      final UserCredential authResult =
+          await FirebaseAuth.instance.signInWithCredential(credential.credential);
 
-      FirebaseUser user = authResult.user;
+      User user = authResult.user;
 
-      String token = (await user.getIdToken()).token;
+      String token = await user.getIdToken();
 
-      User loggedUser = new User(
+
+      UserData loggedUser = new UserData(
         email: user.email,
         id: user.uid,
         token: token,

@@ -267,7 +267,8 @@ class LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                                 : 'Register',
                             buttonController: _loginButtonController.view,
                             onTap: () {
-                              if (model.state != ViewState.Busy) {
+//                              if (model.state != ViewState.Busy) {
+                                print('form data $_formData');
                                 model.loginUser(
                                   _formData,
                                   _playAnimation,
@@ -275,7 +276,7 @@ class LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                                   _formKey,
                                   authMode,
                                 );
-                              }
+//                              }
                             },
                           ),
                         ],

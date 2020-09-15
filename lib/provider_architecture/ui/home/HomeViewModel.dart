@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_provider_architecture/firebase/firebase_database_util.dart';
 import 'package:flutter_provider_architecture/model/chat.dart';
-import 'package:flutter_provider_architecture/model/user.dart';
+import 'package:flutter_provider_architecture/model/user_data.dart';
 import 'package:flutter_provider_architecture/model/user_pref.dart';
 import 'package:flutter_provider_architecture/provider_architecture/repository/api/ErrorResponse.dart';
 import 'package:flutter_provider_architecture/provider_architecture/ui/base/base_model.dart';
 
 class HomeViewModel extends BaseModel implements ErrorResponse {
   List<Chat> chatList = [];
-  User user;
+  UserData user;
 
   init() async {
     this.user = await UserPreferences().getUser();

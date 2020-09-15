@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_provider_architecture/model/user.dart';
+import 'package:flutter_provider_architecture/model/user_data.dart';
 import 'package:flutter_provider_architecture/provider_architecture/ui/about/AboutUsViewModel.dart';
 import 'package:flutter_provider_architecture/provider_architecture/ui/base/base_view.dart';
 import 'package:flutter_provider_architecture/shared/global_config.dart';
@@ -80,7 +80,7 @@ class _AboutUsState extends State<AboutUsView> {
             shrinkWrap: true,
             itemCount: model.userList.length,
             itemBuilder: (context, index) {
-              User user = model.userList[index];
+              UserData user = model.userList[index];
               return Row(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[

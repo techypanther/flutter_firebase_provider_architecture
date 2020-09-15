@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class User {
+class UserData {
   String id;
   String email;
   String token;
@@ -13,7 +13,7 @@ class User {
 
   String avatar;
 
-  User(
+  UserData(
       {@required this.id,
       @required this.email,
       @required this.token,
@@ -21,10 +21,10 @@ class User {
       this.firstName,
       this.username});
 
-  User.empty();
+  UserData.empty();
 
-  factory User.fromJson(dynamic map) {
-    return new User(
+  factory UserData.fromJson(dynamic map) {
+    return new UserData(
       id: map['id'],
       email: map['email'],
       token: map['token'],

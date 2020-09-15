@@ -98,7 +98,7 @@ class GroupChatViewState extends State<GroupChatView> {
                                         index: index,
                                         document: snapshot,
                                         isMe: model.loggedInUser.email ==
-                                            snapshot.data['sender'],
+                                            snapshot.data()['sender'],
                                         // user: widget.user,
                                       ),
                                     );
@@ -293,7 +293,7 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime date = DateTime.parse(document.data['createdAt']);
+    DateTime date = DateTime.parse(document.data()['createdAt']);
     bool isRecent = DateTime.now().difference(date).inHours < 24;
     var dateFormat = isRecent
         ? DateFormat('h:mm a').format(date)
@@ -315,7 +315,7 @@ class MessageBubble extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.only(right: 10),
         child: Utils.getCachedAvatar(
-            'https://api.adorable.io/avatars/60/${document.data['sender']}.png'),
+            'https://api.adorable.io/avatars/60/${document.data()['sender']}.png'),
       ),
       Expanded(
         flex: 7,
@@ -332,17 +332,17 @@ class MessageBubble extends StatelessWidget {
               SizedBox(
                 height: 5.0,
               ),
-              document.data['image'] != null &&
-                      document.data['image'].toString().isNotEmpty
+              document.data()['image'] != null &&
+                      document.data()['image'].toString().isNotEmpty
                   ? GestureDetector(
                       child: Hero(
-                        tag: document.data['image'],
+                        tag: document.data()['image'],
                         child: Image(
                           width: 200,
                           height: 200,
                           fit: BoxFit.cover,
                           image: NetworkImage(
-                            document.data['image'],
+                            document.data()['image'],
                           ),
                         ),
                       ),
@@ -352,13 +352,13 @@ class MessageBubble extends StatelessWidget {
                           context,
                           // EnterExitRoute(
                           //   enterPage: DetailedImage(
-                          //     imageUrl: document.data['image'],
+                          //     imageUrl: document.data()['image'],
                           //   ),
                           //   exitPage: GroupChatView(),
                           // ),
                           MaterialPageRoute(builder: (_) {
                             return DetailedImage(
-                              imageUrl: document.data['image'],
+                              imageUrl: document.data()['image'],
                             );
                           }),
                         );
@@ -377,7 +377,7 @@ class MessageBubble extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 15.0),
                         child: Text(
-                          "${document.data['text']}",
+                          "${document.data()['text']}",
                           style: TextStyle(
                             color: AppTheme.textWhite,
                             fontSize: 15.0,
@@ -429,17 +429,17 @@ class MessageBubble extends StatelessWidget {
               SizedBox(
                 height: 5.0,
               ),
-              document.data['image'] != null &&
-                      document.data['image'].toString().isNotEmpty
+              document.data()['image'] != null &&
+                      document.data()['image'].toString().isNotEmpty
                   ? GestureDetector(
                       child: Hero(
-                        tag: document.data['image'],
+                        tag: document.data()['image'],
                         child: Image(
                           width: 200,
                           height: 200,
                           fit: BoxFit.cover,
                           image: NetworkImage(
-                            document.data['image'],
+                            document.data()['image'],
                           ),
                         ),
                       ),
@@ -449,13 +449,13 @@ class MessageBubble extends StatelessWidget {
                           context,
                           // EnterExitRoute(
                           //   enterPage: DetailedImage(
-                          //     imageUrl: document.data['image'],
+                          //     imageUrl: document.data()['image'],
                           //   ),
                           //   exitPage: GroupChatView(),
                           // ),
                           MaterialPageRoute(builder: (_) {
                             return DetailedImage(
-                              imageUrl: document.data['image'],
+                              imageUrl: document.data()['image'],
                             );
                           }),
                         );
@@ -474,7 +474,7 @@ class MessageBubble extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 15.0),
                         child: Text(
-                          "${document.data['text']}",
+                          "${document.data()['text']}",
                           style: TextStyle(
                             color: AppTheme.accentColor,
                             fontSize: 15.0,
@@ -483,7 +483,7 @@ class MessageBubble extends StatelessWidget {
                       ),
                     )
 //                  : Tools.image(
-//                      url: document.data['image'],
+//                      url: document.data()['image'],
 //                      width: 200,
 //                      height: 200,
 //                      fit: BoxFit.cover)

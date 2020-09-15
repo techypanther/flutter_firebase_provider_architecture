@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_provider_architecture/model/user.dart';
+import 'package:flutter_provider_architecture/model/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferences {
@@ -36,7 +36,7 @@ class UserPreferences {
     return prefs.get('serverKey');
   }
 
-  Future<bool> saveUserDetails(User user) async {
+  Future<bool> saveUserDetails(UserData user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('id', user.id);
     prefs.setString('username', user.username);
@@ -47,9 +47,9 @@ class UserPreferences {
     return true;
   }
 
-  Future<User> getUser() async {
+  Future<UserData> getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    User user = new User.empty();
+    UserData user = new UserData.empty();
     user.id = prefs.get("id");
     user.username = prefs.get("username");
     user.firstName = prefs.get("firstName");

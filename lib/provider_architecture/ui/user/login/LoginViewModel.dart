@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_provider_architecture/firebase/firebase_database_util.dart';
 import 'package:flutter_provider_architecture/model/auth.dart';
-import 'package:flutter_provider_architecture/model/user.dart';
+import 'package:flutter_provider_architecture/model/user_data.dart';
 import 'package:flutter_provider_architecture/model/user_pref.dart';
 import 'package:flutter_provider_architecture/provider_architecture/repository/api/ErrorResponse.dart';
 import 'package:flutter_provider_architecture/provider_architecture/repository/api/login/login_cloud_repository.dart';
@@ -25,10 +25,10 @@ class LoginViewModel extends BaseModel implements ErrorResponse {
     String message = 'Something went wrong.';
 
     // http.Response response;
-    FirebaseUser user;
+    User user;
     if (mode == AuthMode.Login) {
       try {
-        final AuthResult authResult = await FirebaseAuth.instance
+        UserCredential authResult = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
         if (authResult != null) user = authResult.user;
       } on PlatformException catch (error) {
@@ -49,7 +49,7 @@ class LoginViewModel extends BaseModel implements ErrorResponse {
       }
     } else {
       try {
-        final AuthResult authResult = await FirebaseAuth.instance
+        final UserCredential authResult = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
         if (authResult != null) user = authResult.user;
       } on PlatformException catch (error) {
@@ -71,21 +71,16 @@ class LoginViewModel extends BaseModel implements ErrorResponse {
     }
 
     if (user != null) {
-      print(user.displayName);
-      print(user.email);
-      print(user.phoneNumber);
-      print(user.photoUrl);
-      print(user.uid);
-      print((await user.getIdToken()).token);
 
-      await UserPreferences().saveUserDetails(new User(
+
+      await UserPreferences().saveUserDetails(new UserData(
           email: user.email,
           id: user.uid,
-          token: (await user.getIdToken()).token,
+          token: await user.getIdToken(),
           username: user.email,
           firstName: user.displayName,
-          avatar: user.photoUrl));
-      UserPreferences().setAPIToken((await user.getIdToken()).token);
+          avatar: user.photoURL));
+      UserPreferences().setAPIToken(await user.getIdToken());
       message = 'Login succeeded!';
       showMessage(message, false);
       // Utils.showMessage(message);

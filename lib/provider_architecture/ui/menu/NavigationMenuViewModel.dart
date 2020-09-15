@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_provider_architecture/model/user.dart';
+import 'package:flutter_provider_architecture/model/user_data.dart';
 import 'package:flutter_provider_architecture/model/user_pref.dart';
 import 'package:flutter_provider_architecture/provider_architecture/repository/api/ErrorResponse.dart';
 import 'package:flutter_provider_architecture/provider_architecture/ui/about/AboutUsView.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_provider_architecture/provider_architecture/ui/widgets/a
 import 'package:flutter_provider_architecture/shared/global_config.dart';
 
 class NavigationMenuViewModel extends BaseModel implements ErrorResponse {
-  User user;
+  UserData user;
   bool isFirst = true;
 
   @override

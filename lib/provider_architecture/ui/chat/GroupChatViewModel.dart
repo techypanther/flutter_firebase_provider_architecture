@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_provider_architecture/firebase/firebase_storage_util.dart';
 import 'package:flutter_provider_architecture/model/chat.dart';
-import 'package:flutter_provider_architecture/model/user.dart';
+import 'package:flutter_provider_architecture/model/user_data.dart';
 import 'package:flutter_provider_architecture/model/user_pref.dart';
 import 'package:flutter_provider_architecture/provider_architecture/repository/api/ErrorResponse.dart';
 import 'package:flutter_provider_architecture/provider_architecture/ui/base/base_model.dart';
@@ -14,7 +14,7 @@ import 'package:image_picker/image_picker.dart';
 
 class GroupChatViewModel extends BaseModel implements ErrorResponse {
   File imageFile;
-  User loggedInUser;
+  UserData loggedInUser;
   Chat chat = chatModel.chat;
 
   bool isFirst = true;
@@ -65,17 +65,17 @@ class GroupChatViewModel extends BaseModel implements ErrorResponse {
     });
     await chatModel.fireStore
         .collection('chat')
-        .document(chat.id)
+        .doc(chat.id)
         .collection('messages')
-        .document(docRef.documentID)
-        .setData({
+        .doc(docRef.documentID)
+        .set({
       'userTyping': false,
       'adminTyping': false,
       'lastestMessage': '${loggedInUser.email} has sent an image',
       'userEmail': loggedInUser.email,
       'createdAt': DateTime.now().toIso8601String(),
       'isSeenByAdmin': false,
-    }, merge: true);
+    });
   }
 
   updateTyping(bool status) {
@@ -90,18 +90,18 @@ class GroupChatViewModel extends BaseModel implements ErrorResponse {
   void sendMessage(String messagesText) async {
     CollectionReference collectionReference = chatModel.fireStore
         .collection('chat')
-        .document(chat.id)
+        .doc(chat.id)
         .collection('messages');
 
-    DocumentReference docRef = collectionReference.document();
+    DocumentReference docRef = collectionReference.doc();
 
-    await collectionReference.document(docRef.documentID).setData({
+    await collectionReference.doc(docRef.id).setData({
       'text': messagesText,
       'sender': loggedInUser.email,
       'createdAt': DateTime.now().toIso8601String(),
-    }, merge: true);
+    });
 
-    await collectionReference.document(docRef.documentID).setData({
+    await collectionReference.doc(docRef.id).setData({
       'lastestMessage': messagesText,
       'userTyping': false,
       'userEmail': loggedInUser.email,
@@ -110,7 +110,7 @@ class GroupChatViewModel extends BaseModel implements ErrorResponse {
       'userTyping': false,
       'adminTyping': false,
       'image': ''
-    }, merge: true);
+    });
   }
 
   @override

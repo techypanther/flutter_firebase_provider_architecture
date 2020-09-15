@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseDatabaseUtil {
   static final FirebaseDatabaseUtil _instance =
@@ -13,26 +14,27 @@ class FirebaseDatabaseUtil {
   CollectionReference orders;
   CollectionReference category;
   CollectionReference chat;
-  Firestore firestore;
+  FirebaseFirestore firestore;
 
   factory FirebaseDatabaseUtil() {
     return _instance;
   }
 
   void initState() {
-    Firestore.instance.settings(
+     Firebase.initializeApp();
+     FirebaseFirestore.instance.settings= Settings(
         persistenceEnabled: true,
         sslEnabled: true,
-        timestampsInSnapshotsEnabled: true);
+        cacheSizeBytes: 100000000);
 
-    firestore = Firestore.instance;
+    firestore = FirebaseFirestore.instance;
 
-    users = firestore.collection('users').reference();
-    products = firestore.collection('products').reference();
-    wishlist = firestore.collection('wishlist').reference();
-    cart = firestore.collection('cart').reference();
-    orders = firestore.collection('orders').reference();
-    category = firestore.collection('category').reference();
-    chat = firestore.collection('chat').reference();
+    users = firestore.collection('users');
+    products = firestore.collection('products');
+    wishlist = firestore.collection('wishlist');
+    cart = firestore.collection('cart');
+    orders = firestore.collection('orders');
+    category = firestore.collection('category');
+    chat = firestore.collection('chat');
   }
 }
